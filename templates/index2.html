@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8"/>
+      <link rel="icon" type="image/png" href="static/images/favico.png">
+      <title>Polish Traffic Signs Classification App</title>
+      <link href="static/css/style.css" type="text/css" rel="stylesheet"/>
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>
+   </head>
+   <body>
+      <button class="tablink" onclick="openPage('Home', this, 'red')" id="defaultOpen">Home</button>
+      <button class="tablink" onclick="openPage('Disclaimer', this, 'green')">Important note</button>
+      <button class="tablink" onclick="openPage('Contact', this, 'blue')">Contact</button>
+      <div id="Home" class="tabcontent">
+         <div class="container center">
+            <div class="row">
+               <div class="col-md-12">
+                  <h1>Polish Traffic Signs Classification App</h1>
+                  <p>Submit an image of a polish traffic sign below.</p>
+               </div>
+            </div>
+            <form name="upload" method="post" action="#" enctype="multipart/form-data" accept-charset="utf-8">
+               <div class="row">
+                  <div class="col-md-6 col-md-offset-3 center">
+                     <div class="btn-container">
+                        <!--the three icons: default, ok file (img), error file (not an img)-->
+                        <h1 class="imgupload"><i class="fa fa-file-image-o"></i></h1>
+                        <h1 class="imgupload ok"><i class="fa fa-check"></i></h1>
+                        <h1 class="imgupload stop"><i class="fa fa-times"></i></h1>
+                        <!--this field changes dinamically displaying the filename we are trying to upload-->
+                        <p id="namefile">Only pics allowed! (jpg, jpeg, bmp, png)</p>
+                        <!--our custom btn which stays under the actual one-->
+                        <button type="button" id="btnup" class="btn btn-primary btn-lg">Browse</button>
+                        <!--this is the actual file input, is set with opacity=0 because we wanna see our custom one-->
+                        <input type="file" name="fileup" id="fileup">
+                     </div>
+                  </div>
+               </div>
+               <!--additional fields-->
+               <div class="row">
+                  <div class="col-md-12">
+                     <!--the default disabled btn and the actual one shown only if the three fields are valid-->
+                     <input type="submit" value="Submit!" class="btn btn-primary" id="submitbtn">
+                     <button type="button" class="btn btn-default" disabled="disabled" id="fakebtn">Submit! <i
+                        class="fa fa-minus-circle"></i></button>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-12">
+                     <div style="text-align: center; padding-top: 50px;">
+                        <img src="{{ url_for('static',filename=full_filename) }}" width="300" height="300">
+                        {% if pred_num %}
+                        <div class="col-md-12 center">
+                           <h1 class="align-middle display-4">
+                              <i class="fa fa-arrow-circle-right"></i> {{ pred_num }}: {{ pred_name }} <i
+                                 class="fa fa-arrow-circle-left"></i>
+                           </h1>
+                        </div>
+                        {% endif %}
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+      <div id="Disclaimer" class="tabcontent">
+         <div class="container center">
+            <div class="col-md-12">
+               <h1>Disclaimer</h1>
+               <p>This application was trained on a dataset consisting of 92 polish traffic signs:</p>
+               <div class="row">
+                  <div class="col">
+                     <table class="special_table">
+                        <tr>
+                           <td>1</td>
+                           <td>A-1</td>
+                           <td>Niebezpieczny zakręt w prawo</td>
+                           <td>31</td>
+                           <td>B-9</td>
+                           <td>Zakaz wjazdu rowerów</td>
+                           <td>61</td>
+                           <td>D-3</td>
+                           <td>Droga jednokierunkowa</td>
+                        </tr>
+                        <tr>
+                           <td>2</td>
+                           <td>A-2</td>
+                           <td>Niebezpieczny zakręt w lewo</td>
+                           <td>32</td>
+                           <td>B-18</td>
+                           <td>Zakaz wjazdu pojazdów o rzeczywistej masie całkowitej ponad ... t.</td>
+                           <td>62</td>
+                           <td>D-4a</td>
+                           <td>Droga bez przejazdu</td>
+                        </tr>
+                        <tr>
+                           <td>3</td>
+                           <td>A-3</td>
+                           <td>Niebezpieczne zakręty, pierwszy w prawo</td>
+                           <td>33</td>
+                           <td>B-20</td>
+                           <td>STOP</td>
+                           <td>63</td>
+                           <td>D-4b</td>
+                           <td>Wjazd na drogę bez przejazdu</td>
+                        </tr>
+                        <tr>
+                           <td>4</td>
+                           <td>A-4</td>
+                           <td>Niebezpieczne zakręty, pierwszy w lewo</td>
+                           <td>34</td>
+                           <td>B-21</td>
+                           <td>Zakaz skręcania w lewo</td>
+                           <td>64</td>
+                           <td>D-6</td>
+                           <td>Przejście dla pieszych</td>
+                        </tr>
+                        <tr>
+                           <td>5</td>
+                           <td>A-6a</td>
+                           <td>Skrzyżowanie z drogą podporządkowaną
+                              występującą po obu stronach
+                           </td>
+                           <td>35</td>
+                           <td>B-22</td>
+                           <td>Zakaz skręcania w prawo</td>
+                           <td>65</td>
+                           <td>D-6b</td>
+                           <td>Przejście dla pieszych i przejazd dla rowerzystów</td>
+                        </tr>
+                        <tr>
+                           <td>6</td>
+                           <td>A-6b</td>
+                           <td>Skrzyżowanie z drogą podporządkowaną
+                              występującą po prawej stronie
+                           </td>
+                           <td>36</td>
+                           <td>B-25</td>
+                           <td>Zakaz wyprzedzania</td>
+                           <td>66</td>
+                           <td>D-7</td>
+                           <td>Droga ekspresowa</td>
+                        </tr>
+                        <tr>
+                           <td>7</td>
+                           <td>A-6c</td>
+                           <td>Skrzyżowanie z drogą podporządkowaną
+                              występującą po lewej stronie
+                           </td>
+                           <td>37</td>
+                           <td>B-26</td>
+                           <td>Zakaz wyprzedzania przez samochody ciężarowe</td>
+                           <td>67</td>
+                           <td>D-8</td>
+                           <td>Koniec drogi ekspresowej</td>
+                        </tr>
+                        <tr>
+                           <td>8</td>
+                           <td>A-6d</td>
+                           <td>Wlot drogi jednokierunkowej z prawej
+                              strony
+                           </td>
+                           <td>38</td>
+                           <td>B-27</td>
+                           <td>Koniec zakazu wyprzedzania</td>
+                           <td>68</td>
+                           <td>D-9</td>
+                           <td>Autostrada</td>
+                        </tr>
+                        <tr>
+                           <td>9</td>
+                           <td>A-6e</td>
+                           <td>Wlot drogi jednokierunkowej z lewej
+                              strony
+                           </td>
+                           <td>39</td>
+                           <td>B-33</td>
+                           <td>Ograniczenie prędkości</td>
+                           <td>69</td>
+                           <td>D-14</td>
+                           <td>Koniec pasa ruchu</td>
+                        </tr>
+                        <tr>
+                           <td>10</td>
+                           <td>A-7</td>
+                           <td>Ustąp pierwszeństwa</td>
+                           <td>40</td>
+                           <td>B-34</td>
+                           <td>Koniec ograniczenia prędkości</td>
+                           <td>70</td>
+                           <td>D-15</td>
+                           <td>Przystanek autobusowy</td>
+                        </tr>
+                        <tr>
+                           <td>11</td>
+                           <td>A-8</td>
+                           <td>Skrzyżowanie o ruchu okrężnym</td>
+                           <td>41</td>
+                           <td>B-36</td>
+                           <td>Zakaz zatrzymywania się</td>
+                           <td>71</td>
+                           <td>D-18</td>
+                           <td>Parking</td>
+                        </tr>
+                        <tr>
+                           <td>12</td>
+                           <td>A-11</td>
+                           <td>Nierówna droga</td>
+                           <td>42</td>
+                           <td>B-41</td>
+                           <td>Zakaz ruchu pieszych</td>
+                           <td>72</td>
+                           <td>D-18b</td>
+                           <td>Parking zadaszony</td>
+                        </tr>
+                        <tr>
+                           <td>13</td>
+                           <td>A-11a</td>
+                           <td>Próg zwalniający</td>
+                           <td>43</td>
+                           <td>B-42</td>
+                           <td>Koniec zakazów</td>
+                           <td>73</td>
+                           <td>D-21</td>
+                           <td>Szpital</td>
+                        </tr>
+                        <tr>
+                           <td>14</td>
+                           <td>A-12a</td>
+                           <td>Zwężenie jezdni - dwustronne</td>
+                           <td>44</td>
+                           <td>B-43</td>
+                           <td>Strefa ograniczonej prędkości</td>
+                           <td>74</td>
+                           <td>D-23</td>
+                           <td>Stacja paliwowa</td>
+                        </tr>
+                        <tr>
+                           <td>15</td>
+                           <td>A-14</td>
+                           <td>Roboty drogowe</td>
+                           <td>45</td>
+                           <td>B-44</td>
+                           <td>Koniec strefy ograniczonej prędkości</td>
+                           <td>75</td>
+                           <td>D-23a</td>
+                           <td>Stacja paliwowa tylko z gazem do napędu pojazdów</td>
+                        </tr>
+                        <tr>
+                           <td>16</td>
+                           <td>A-15</td>
+                           <td>Śliska jezdnia</td>
+                           <td>46</td>
+                           <td>C-2</td>
+                           <td>Nakaz jazdy w prawo za znakiem</td>
+                           <td>76</td>
+                           <td>D-24</td>
+                           <td>Telefon</td>
+                        </tr>
+                        <tr>
+                           <td>17</td>
+                           <td>A-16</td>
+                           <td>Przejście dla pieszych</td>
+                           <td>47</td>
+                           <td>C-4</td>
+                           <td>Nakaz jazdy w lewo za znakiem</td>
+                           <td>77</td>
+                           <td>D-26</td>
+                           <td>Stacja obsługi technicznej </td>
+                        </tr>
+                        <tr>
+                           <td>18</td>
+                           <td>A-17</td>
+                           <td>Dzieci</td>
+                           <td>48</td>
+                           <td>C-5</td>
+                           <td>Nakaz jazdy prosto</td>
+                           <td>78</td>
+                           <td>D-26b</td>
+                           <td>Myjnia</td>
+                        </tr>
+                        <tr>
+                           <td>19</td>
+                           <td>A-18b</td>
+                           <td>Zwierzęta dzikie</td>
+                           <td>49</td>
+                           <td>C-6</td>
+                           <td>Nakaz jazdy prosto lub w prawo</td>
+                           <td>79</td>
+                           <td>D-26c</td>
+                           <td>Toaleta publiczna</td>
+                        </tr>
+                        <tr>
+                           <td>20</td>
+                           <td>A-20</td>
+                           <td>Odcinek jezdni o ruchu dwukierunkowym</td>
+                           <td>50</td>
+                           <td>C-7</td>
+                           <td>Nakaz jazdy prosto lub w lewo </td>
+                           <td>80</td>
+                           <td>D-27</td>
+                           <td>Bufet lub kawiarnia</td>
+                        </tr>
+                        <tr>
+                           <td>21</td>
+                           <td>A-21</td>
+                           <td>Tramwaj</td>
+                           <td>51</td>
+                           <td>C-9</td>
+                           <td>Nakaz jazdy z prawej strony znaku </td>
+                           <td>81</td>
+                           <td>D-28</td>
+                           <td>Restauracja</td>
+                        </tr>
+                        <tr>
+                           <td>22</td>
+                           <td>A-24</td>
+                           <td>Rowerzyści</td>
+                           <td>52</td>
+                           <td>C-10</td>
+                           <td>Nakaz jazdy z lewej strony znaku</td>
+                           <td>82</td>
+                           <td>D-29</td>
+                           <td>Hotel (motel)</td>
+                        </tr>
+                        <tr>
+                           <td>23</td>
+                           <td>A-29</td>
+                           <td>Sygnały świetlne</td>
+                           <td>53</td>
+                           <td>C-12</td>
+                           <td>Ruch okrężny</td>
+                           <td>83</td>
+                           <td>D-40</td>
+                           <td>Strefa zamieszkania</td>
+                        </tr>
+                        <tr>
+                           <td>24</td>
+                           <td>A-30</td>
+                           <td>Inne niebezpieczeństwo</td>
+                           <td>54</td>
+                           <td>C-13</td>
+                           <td>Droga dla rowerów</td>
+                           <td>84</td>
+                           <td>D-41</td>
+                           <td>Koniec strefy zamieszkania</td>
+                        </tr>
+                        <tr>
+                           <td>25</td>
+                           <td>A-32</td>
+                           <td>Oszronienie jezdni</td>
+                           <td>55</td>
+                           <td>C-13-C-16</td>
+                           <td>Droga dla pieszych i rowerzystów</td>
+                           <td>85</td>
+                           <td>D-42</td>
+                           <td>Obszar zabudowany</td>
+                        </tr>
+                        <tr>
+                           <td>26</td>
+                           <td>B-1</td>
+                           <td>Zakaz ruchu w obu kierunkach</td>
+                           <td>56</td>
+                           <td>C-13a</td>
+                           <td>Koniec drogi dla rowerów</td>
+                           <td>86</td>
+                           <td>D-43</td>
+                           <td>Koniec obszaru zabudowanego</td>
+                        </tr>
+                        <tr>
+                           <td>27</td>
+                           <td>B-2</td>
+                           <td>Zakaz wjazdu</td>
+                           <td>57</td>
+                           <td>C-13a-C-16a</td>
+                           <td>Koniec drogi dla pieszych i rowerzystów</td>
+                           <td>87</td>
+                           <td>D-51</td>
+                           <td>Automatyczna kontrola prędkości</td>
+                        </tr>
+                        <tr>
+                           <td>28</td>
+                           <td>B-5</td>
+                           <td>Zakaz wjazdu samochodów ciężarowych</td>
+                           <td>58</td>
+                           <td>C-16</td>
+                           <td>Droga dla pieszych</td>
+                           <td>88</td>
+                           <td>D-52</td>
+                           <td>Strefa ruchu</td>
+                        </tr>
+                        <tr>
+                           <td>29</td>
+                           <td>B-6-B-8-B-9</td>
+                           <td>Zakaz wjazdu pojazdów innych niż samochodowe</td>
+                           <td>59</td>
+                           <td>D-1</td>
+                           <td>Droga z pierwszeństwem</td>
+                           <td>89</td>
+                           <td>D-53</td>
+                           <td>Koniec strefy ruchu</td>
+                        </tr>
+                        <tr>
+                           <td>30</td>
+                           <td>B-8</td>
+                           <td>Zakaz wjazdu pojazdów zaprzęgowych</td>
+                           <td>60</td>
+                           <td>D-2</td>
+                           <td>Koniec drogi z pierwszeństwem</td>
+                           <td>90</td>
+                           <td>D-tablica</td>
+                           <td>Zbiorcza tablica informacyjna</td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>91</td>
+                           <td>G-1a</td>
+                           <td>Słupek wskaźnikowy z trzema kreskami umieszczany po prawej stronie jezdni</td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>92</td>
+                           <td>G-3</td>
+                           <td>Krzyż św. Andrzeja przed przejazdem kolejowym jednotorowym </td>
+                        </tr>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="Contact" class="tabcontent">
+         <div class="container center">
+            <div class="col-md-12">
+               <h3>Contact</h3>
+               <p>Get in touch, or swing by for a cup of coffee.</p>
+
+               <p><a href="https://www.flaticon.com/free-icons/adaptability" title="adaptability icons">Favicon created by Adrien Coquet - Flaticon</a></p>
+               <p>Image upload script created by <a href="https://codepen.io/emiemi/pen/zxNXWR">@emiemi</a></p>
+            </div>
+         </div>
+      </div>
+      <a href="https://codepen.io/emiemi/pen/zxNXWR" target="_blank" id="sign">EMI</a>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
+      <script src="static/js/script.js" type="text/javascript"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+         type="text/javascript"></script>
+      <script src="static/js/tabs.js" type="text/javascript"></script>
+   </body>
+</html>
