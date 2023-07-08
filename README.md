@@ -3,8 +3,8 @@
 <div align="center">This Flask application presents how a Convolutional Neural Network model can classify polish traffic signs images.
 
 
-Demo running on Google Cloud:
 
+Demo running on Google Cloud:
 https://pl-traffic-signs-vvfsnbp67a-lm.a.run.app/
 
 ### Please note the model was trained on 92 classes available in the dataset. Full list of classes can be find in the web application in "Important note" tab.
