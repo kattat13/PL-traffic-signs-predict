@@ -2,12 +2,15 @@
 
 <div align="center">This Flask application presents how a Convolutional Neural Network model can classify polish traffic signs images.
 
-Demo: https://pl-traffic-signs-vvfsnbp67a-lm.a.run.app/
+
+Demo running on Google Cloud:
+
+https://pl-traffic-signs-vvfsnbp67a-lm.a.run.app/
 
 ### Please note the model was trained on 92 classes available in the dataset. Full list of classes can be find in the web application in "Important note" tab.
 </div>
 
----
+
 ## ❓ Why?
 
 Traffic signs classification is one of the most popular projects for people learning Deep Learning. The most popular dataset for this issue is GTSRB - German Traffic Sign Recognition Benchmark. 
@@ -16,7 +19,7 @@ When I discovered [this dataset shared on Kaggle](https://www.kaggle.com/dataset
 
 Notebook of the model will be shared soon on Kaggle.
 
----
+
 ## 🔧 Tech Stack
 
 ![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)
@@ -28,7 +31,7 @@ Notebook of the model will be shared soon on Kaggle.
 ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JS](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
 
----
+
 ##  💡 Credits
 - Favicon created by [Adrien Coquet - Flaticon](https://www.flaticon.com/free-icons/adaptability)
 - Image upload JS script created by [@emiemi](https://codepen.io/emiemi/pen/zxNXWR)
