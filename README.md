@@ -17,7 +17,7 @@ Traffic signs classification is one of the most popular projects for people lear
 I wanted to try traffic signs classification but on a different dataset. 
 When I discovered [this dataset shared on Kaggle](https://www.kaggle.com/datasets/kasia12345/polish-traffic-signs-dataset) - a 92-classes dataset made of polish traffic signs - I knew I have to use it for my next project.
 
-Notebook of the model will be shared soon on Kaggle.
+Notebook of the model is available on Kaggle: [╰┈➤here](https://www.kaggle.com/code/kattat/polish-traffic-signs-classification).
 
 
 ## 🔧 Tech Stack
